@@ -2,6 +2,8 @@
 
 Returns the difference between two JSON files.
 
+[![Build Status](http://travis-ci.org/a2design-company/json-compare.png?branch=master)](http://travis-ci.org/a2design-company/json-compare)
+
 ## Installation
 
 Add this line to your application's Gemfile:
