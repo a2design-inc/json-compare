@@ -1,6 +1,6 @@
 # JsonCompare
 
-Returns the difference between the two JSON files
+Returns the difference between two JSON files.
 
 ## Installation
 
@@ -18,9 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-require 'json-compare'
+    require 'yajl'
+    require 'json-compare'
 
-result = JsonCompare.get_diff(json1, json2)
+    json1 = File.new('spec/fixtures/twitter-search.json', 'r')
+    json2 = File.new('spec/fixtures/twitter-search2.json', 'r')
+    old, new = Yajl::Parser.parse(json1), Yajl::Parser.parse(json2)
+    result = JsonCompare.get_diff(old, new)
 
 ## Contributing
 
