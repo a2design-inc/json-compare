@@ -3,6 +3,7 @@
 Returns the difference between two JSON files.
 
 [![Build Status](http://travis-ci.org/a2design-company/json-compare.png?branch=master)](http://travis-ci.org/a2design-company/json-compare)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/a2design-company/json-compare)
 
 ## Installation
 
