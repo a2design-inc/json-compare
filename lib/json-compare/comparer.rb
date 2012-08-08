@@ -22,23 +22,16 @@ module JsonCompare
     end
 
     def compare_hashes(old_hash, new_hash)
-      old_keys = old_hash.keys
-      new_keys = new_hash.keys
-      keys = (old_keys + new_keys).uniq
-
-      result = {
-          append: {},
-          remove: {},
-          update: {}
-      }
+      keys = (old_hash.keys + new_hash.keys).uniq
+      result = get_diffs_struct
       keys.each do |k|
         if !old_hash.has_key? k
           result[:append][k] = new_hash[k]
         elsif !new_hash.has_key? k
           result[:remove][k] = new_hash[k]
         else
-          res = compare_elements(old_hash[k], new_hash[k])
-          result[:update][k] = res unless res.empty?
+          diff = compare_elements(old_hash[k], new_hash[k])
+          result[:update][k] = diff unless diff.empty?
         end
       end
       filter_results(result)
@@ -49,11 +42,7 @@ module JsonCompare
       new_array_length = new_array.count
       inters = [old_array.count, new_array.count].min
 
-      result = {
-          append: {},
-          remove: {},
-          update: {}
-      }
+      result = get_diffs_struct
 
       (0..inters).map do |n|
         res = compare_elements(old_array[n], new_array[n])
@@ -75,11 +64,7 @@ module JsonCompare
     end
 
     def compare_hash_array(old_hash, new_array)
-      result = {
-          append: {},
-          remove: {},
-          update: {}
-      }
+      result = get_diffs_struct
 
       (0..new_array.count).map do |n|
         next if new_array[n].nil?
@@ -96,6 +81,11 @@ module JsonCompare
 
     def compare_strings(old_string, new_string)
       (old_string != new_string) ? new_string.to_s : ""
+    end
+
+    # Returns diffs-hash with bare structure
+    def get_diffs_struct
+      {:append => {}, :remove => {},:update => {}}
     end
 
     def filter_results(result)
