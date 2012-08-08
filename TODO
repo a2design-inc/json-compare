@@ -1,7 +1,6 @@
 - Add possibility for exclusion of some keys from the comparison,
 or in other way to check only some keys
 - Improve the code quality
-- Make it workable for 1.8.7, rbx and ree
 - Add documentation!
 - Add more examples!!
 - Add more specs!!!
