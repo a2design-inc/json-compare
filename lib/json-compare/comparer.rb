@@ -1,5 +1,8 @@
 module JsonCompare
   class Comparer
+
+    attr_accessor :excluded_keys
+
     def compare_elements(old, new)
       diff = {}
       if old.kind_of? Hash
@@ -96,6 +99,7 @@ module JsonCompare
         temp_hash = {}
         result[change_type].each_key do |key|
           next if result[change_type][key].nil?
+          next if @excluded_keys.include? key
           temp_hash[key] = result[change_type][key]
         end
         out_result[change_type] = temp_hash if temp_hash.count > 0

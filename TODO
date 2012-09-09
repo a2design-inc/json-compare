@@ -1,5 +1,4 @@
-- Add possibility for exclusion of some keys from the comparison,
-or in other way to check only some keys
+- Add possibility to check only some keys in comparison
 - Improve the code quality
 - Add documentation!
 - Add more examples!!

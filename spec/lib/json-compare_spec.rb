@@ -106,4 +106,35 @@ describe 'Json compare' do
       result.should eq(expected_result)
     end
   end
+
+  describe "keys exclusion" do
+    it "should be empty hash" do
+      json1 = File.new('spec/fixtures/twitter-search.json', 'r')
+      json2 = File.new('spec/fixtures/twitter-search2.json', 'r')
+      old, new = Yajl::Parser.parse(json1), Yajl::Parser.parse(json2)
+      result = JsonCompare.get_diff(old, new, ["results"])
+      result.should eq({})
+    end
+
+    it "should not contain 'from_user' changes" do
+      json1 = File.new('spec/fixtures/twitter-search.json', 'r')
+      json2 = File.new('spec/fixtures/twitter-search2.json', 'r')
+      old, new = Yajl::Parser.parse(json1), Yajl::Parser.parse(json2)
+      result = JsonCompare.get_diff(old, new, ["from_user"])
+      expected = {
+        :update => {
+          "results" => {
+            :update => {
+              0 => {
+                :update => {
+                  "to_user_id" => "8153091",
+                }
+              }
+            }
+          }
+        }
+      }
+      result.should eq(expected)
+    end
+  end
 end

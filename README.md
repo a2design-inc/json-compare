@@ -30,6 +30,11 @@ Or install it yourself as:
     old, new = Yajl::Parser.parse(json1), Yajl::Parser.parse(json2)
     result = JsonCompare.get_diff(old, new)
 
+If you want to exclude some keys from comparison use exclusion param:
+
+    exclusion = ["from_user", "to_user_id"]
+    result = JsonCompare.get_diff(old, new, exclusion)
+
 ## Contributing
 
 1. Fork it
