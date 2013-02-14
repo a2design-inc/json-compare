@@ -18,9 +18,8 @@ module JsonCompare
         diff_arr = compare_arrays(old, new)
         diff = diff_arr if diff_arr.count > 0
       else
-        string_diff = compare_strings(old, new)
+        string_diff = compare_as_strings(old, new)
         diff = string_diff unless string_diff.nil?
-      end
       diff
     end
 
@@ -83,7 +82,7 @@ module JsonCompare
     end
 
     def compare_strings(old_string, new_string)
-      (old_string != new_string) ? new_string.to_s : ""
+      (old_string != new_string) ? new_string.to_s : nil
     end
 
     # Returns diffs-hash with bare structure
