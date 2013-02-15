@@ -3,6 +3,10 @@ module JsonCompare
 
     attr_accessor :excluded_keys
 
+    def is_boolean(obj)
+      !!obj == obj
+    end
+    
     def compare_elements(old, new)
       diff = {}
       if old.kind_of? Hash
@@ -12,14 +16,15 @@ module JsonCompare
           diff_hash = compare_hashes(old, new)
         end
         diff = diff_hash if diff_hash.count > 0
-      elsif old.class != new.class
+      elsif (!is_boolean(old) || !is_boolean(new)) && old.class != new.class
         diff = new
       elsif old.kind_of? Array
         diff_arr = compare_arrays(old, new)
         diff = diff_arr if diff_arr.count > 0
       else
-        string_diff = compare_as_strings(old, new)
+        string_diff = compare_strings(old, new)
         diff = string_diff unless string_diff.nil?
+      end
       diff
     end
 
@@ -82,7 +87,7 @@ module JsonCompare
     end
 
     def compare_strings(old_string, new_string)
-      (old_string != new_string) ? new_string.to_s : nil
+      (old_string != new_string) ? new_string.to_s : ""
     end
 
     # Returns diffs-hash with bare structure
