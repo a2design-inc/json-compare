@@ -1,0 +1,11 @@
+= 0.1.5
+
+ * Fixed comparisons between true and false types (Olivier Carrere)
+
+= 0.1.4
+
+ * Add possibility for exclusion of some keys from the comparisons (Stanislav Chistenko)
+
+ = 0.1
+
+  * Initial gem release
