@@ -105,6 +105,11 @@ describe 'Json compare' do
       }
       result.should eq(expected_result)
     end
+
+    it "should compare arrays of fixnums" do
+      result =  JsonCompare.get_diff([1, 2, 3], [1, 2, 3, 4])
+      result.should eq(:append => { 3 => 4 }, :update => { 3 => 4 })
+    end
   end
 
   describe "keys exclusion" do
