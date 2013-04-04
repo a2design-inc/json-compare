@@ -53,7 +53,7 @@ module JsonCompare
 
       (0..inters).map do |n|
         res = compare_elements(old_array[n], new_array[n])
-        result[:update][n] = res unless res.empty?
+        result[:update][n] = res unless (res.nil? || (res.respond_to?(:empty?) && res.empty?))
       end
 
       # the rest of the larger array
@@ -79,7 +79,7 @@ module JsonCompare
           res = compare_elements(old_hash, new_array[0])
           result[:update][n] = res unless res.empty?
         else
-        result[:append][n] = new_array[n]
+          result[:append][n] = new_array[n]
         end
       end
 
