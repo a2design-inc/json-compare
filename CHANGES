@@ -1,3 +1,7 @@
+= 0.1.6
+
+ * Fixed comparison of fixnum array elements (robworley)
+
 = 0.1.5
 
  * Fixed comparisons between true and false types (Olivier Carrere)
