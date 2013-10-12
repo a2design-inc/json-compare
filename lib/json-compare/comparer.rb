@@ -6,7 +6,7 @@ module JsonCompare
     def is_boolean(obj)
       !!obj == obj
     end
-    
+
     def compare_elements(old, new)
       diff = {}
       if old.kind_of? Hash
@@ -51,7 +51,7 @@ module JsonCompare
 
       result = get_diffs_struct
 
-      (0..inters).map do |n|
+      (0..inters-1).map do |n|
         res = compare_elements(old_array[n], new_array[n])
         result[:update][n] = res unless (res.nil? || (res.respond_to?(:empty?) && res.empty?))
       end
