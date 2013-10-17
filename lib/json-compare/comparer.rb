@@ -29,6 +29,8 @@ module JsonCompare
     end
 
     def compare_hashes(old_hash, new_hash)
+      old_hash = old_hash == nil ? {} : old_hash
+      new_hash = new_hash == nil ? {} : new_hash
       keys = (old_hash.keys + new_hash.keys).uniq
       result = get_diffs_struct
       keys.each do |k|
