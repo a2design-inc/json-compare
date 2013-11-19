@@ -37,7 +37,7 @@ module JsonCompare
         if !old_hash.has_key? k
           result[:append][k] = new_hash[k]
         elsif !new_hash.has_key? k
-          result[:remove][k] = new_hash[k]
+          result[:remove][k] = old_hash[k]
         else
           diff = compare_elements(old_hash[k], new_hash[k])
           result[:update][k] = diff unless diff.empty?

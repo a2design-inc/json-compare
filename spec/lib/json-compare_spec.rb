@@ -97,6 +97,11 @@ describe 'Json compare' do
                       "empty"=>nil
                     }]
                   }]
+                },
+                :remove => {
+                  "Something" => [{
+                      "Something" => [{}]
+                  }]
                 }
               }
             }
