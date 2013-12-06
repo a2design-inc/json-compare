@@ -6,7 +6,7 @@ module JsonCompare
     def is_boolean(obj)
       !!obj == obj
     end
-    
+
     def compare_elements(old, new)
       diff = {}
       if old.kind_of? Hash
@@ -40,7 +40,11 @@ module JsonCompare
           result[:remove][k] = old_hash[k]
         else
           diff = compare_elements(old_hash[k], new_hash[k])
-          result[:update][k] = diff unless diff.empty?
+          if diff.respond_to? "empty?"
+            result[:update][k] = diff unless diff.empty?
+          else
+            result[:update][k] = diff # some classes have no empty? method
+          end
         end
       end
       filter_results(result)
