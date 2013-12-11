@@ -1,3 +1,8 @@
+= 0.1.8
+
+ * FIX: comparing a String with a Fixnum (Marc Neumann)
+ * FIX: return remove when old_hash has more keys then the new_hash (Marc Neumann)
+
 = 0.1.6
 
  * Fixed comparison of fixnum array elements (robworley)
