@@ -13,6 +13,22 @@ describe 'Json compare' do
     end
   end
 
+  describe 'Comparison of different classes' do
+    it 'should compare String with Fixnum' do
+      json1 = Yajl::Parser.parse('{"a":"1"}')
+      json2 = Yajl::Parser.parse('{"a":1}')
+      result = JsonCompare.get_diff(json1,json2)
+      result.should eq({:update=>{"a"=>1}})
+    end
+
+    it 'should compare String with Float' do
+      json1 = Yajl::Parser.parse('{"a":"1"}')
+      json2 = Yajl::Parser.parse('{"a":1.0}')
+      result = JsonCompare.get_diff(json1,json2)
+      result.should eq({:update=>{"a"=>1}})
+    end
+  end
+
   describe 'Hashes Comparison' do
     it 'should return empty Hash' do
       result = JsonCompare.get_diff({}, {})
@@ -96,6 +112,11 @@ describe 'Json compare' do
                     "Something2" => [{
                       "empty"=>nil
                     }]
+                  }]
+                },
+                :remove => {
+                  "Something" => [{
+                      "Something" => [{}]
                   }]
                 }
               }
