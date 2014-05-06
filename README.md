@@ -6,6 +6,7 @@ Returns the difference between two JSON files.
 [![Dependency Status](https://gemnasium.com/a2design-company/json-compare.png?travis)](https://gemnasium.com/a2design-company/json-compare)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/a2design-company/json-compare)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/a2design-company/json-compare/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Pledgie!](https://pledgie.com/campaigns/25182.png?skin_name=chrome)](https://pledgie.com/campaigns/25182)
 
 ## Installation
 
