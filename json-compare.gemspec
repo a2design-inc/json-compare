@@ -18,5 +18,7 @@ Gem::Specification.new do |gem|
   # tests
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', ">= 2.0.0"
-  gem.add_development_dependency 'yajl-ruby'
+
+  #for actual use and tests
+  gem.add_dependency 'yajl-ruby'
 end
