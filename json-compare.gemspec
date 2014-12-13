@@ -19,4 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', ">= 2.0.0"
   gem.add_development_dependency 'yajl-ruby'
+
+  #for actual use
+  gem.add_runtime_dependency 'yajl-ruby'
 end
