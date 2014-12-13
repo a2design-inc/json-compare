@@ -10,6 +10,10 @@ Returns the difference between two JSON files.
 
 ## Installation
 
+This gem makes use of a JSON parsing and encoding library for Ruby, [yajl-ruby](https://github.com/brianmario/yajl-ruby)
+
+Make sure that YAJL-Ruby is installed first!
+
 Add this line to your application's Gemfile:
 
     gem 'json-compare'
