@@ -17,7 +17,7 @@ module JsonCompare
         end
         diff = diff_hash if diff_hash.count > 0
       elsif (!is_boolean(old) || !is_boolean(new)) && old.class != new.class
-        diff = new
+        diff = new == nil ? old : new
       elsif old.kind_of? Array
         diff_arr = compare_arrays(old, new)
         diff = diff_arr if diff_arr.count > 0
