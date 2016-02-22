@@ -1,7 +1,7 @@
 module JsonCompare
   class Comparer
 
-    attr_accessor :excluded_keys
+    attr_accessor :excluded_keys, :matching_key
 
     def is_boolean(obj)
       !!obj == obj
@@ -51,26 +51,34 @@ module JsonCompare
     end
 
     def compare_arrays(old_array, new_array)
-      old_array_length = old_array.count
-      new_array_length = new_array.count
-      inters = [old_array.count, new_array.count].min
-
+      has_comparing_way = !matching_key.nil?
       result = get_diffs_struct
+      new_array_index = 0
+      new_array_length = new_array.count
 
-      (0..inters).map do |n|
-        res = compare_elements(old_array[n], new_array[n])
-        result[:update][n] = res unless (res.nil? || (res.respond_to?(:empty?) && res.empty?))
+      old_array.each_with_index do |elem, index|
+        number = (new_array_index...new_array_length).detect do |n|
+          !(
+            has_comparing_way &&
+            elem.kind_of?(Hash) && elem.has_key?(matching_key) &&
+            new_array[n].kind_of?(Hash) && new_array[n].has_key?(matching_key)
+          ) || new_array[n][matching_key] == elem[matching_key]
+        end
+
+        if number
+          res = compare_elements(elem, new_array[number])
+          result[:update][index] = res unless (res.nil? || (res.respond_to?(:empty?) && res.empty?))
+          (new_array_index...number).each do |n|
+            result[:append][n] = new_array[n]
+          end
+          new_array_index = number + 1
+        else
+          result[:remove][index] = elem
+        end
       end
 
-      # the rest of the larger array
-      if inters == old_array_length
-        (inters..new_array_length).each do |n|
-          result[:append][n] = new_array[n]
-        end
-      else
-        (inters..old_array_length).each do |n|
-          result[:remove][n] = old_array[n]
-        end
+      (new_array_index...new_array_length).each do |n|
+        result[:append][n] = new_array[n]
       end
 
       filter_results(result)
@@ -79,7 +87,7 @@ module JsonCompare
     def compare_hash_array(old_hash, new_array)
       result = get_diffs_struct
 
-      (0..new_array.count).map do |n|
+      (0...new_array.count).map do |n|
         next if new_array[n].nil?
         if n == 0
           res = compare_elements(old_hash, new_array[0])

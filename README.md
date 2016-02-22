@@ -37,6 +37,16 @@ If you want to exclude some keys from comparison use exclusion param:
     exclusion = ["from_user", "to_user_id"]
     result = JsonCompare.get_diff(old, new, exclusion)
 
+Alternative way for excluding keys from comparison:
+
+    exclusions = ["from_user", "to_user_id"]
+    result = JsonCompare.get_diff(old, new, excluded_key: excluded_keys)
+
+If you want to match array elements by a certain key:
+
+    result = JsonCompare.get_diff(old, new, matching_key: "id")
+
+
 ## Contributing
 
 1. Fork it
