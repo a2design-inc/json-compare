@@ -4,7 +4,7 @@ require 'json-compare/comparer'
 module JsonCompare
   def self.get_diff(old, new, options = {})
     if options.kind_of?(Array)
-      options = {excluded_keys: options}
+      options = {:excluded_keys => options}
     end
     comparer = JsonCompare::Comparer.new
     comparer.excluded_keys = options.delete(:excluded_keys) || []
