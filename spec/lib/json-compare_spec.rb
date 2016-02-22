@@ -129,7 +129,86 @@ describe 'Json compare' do
 
     it "should compare arrays of fixnums" do
       result =  JsonCompare.get_diff([1, 2, 3], [1, 2, 3, 4])
-      result.should eq(:append => { 3 => 4 }, :update => { 3 => 4 })
+      result.should eq(:append => { 3 => 4 })
+    end
+  end
+
+
+  describe 'Arrays Comparison with matching condition' do
+    it "should treat as update" do
+      old = [{id: '123'}]
+      new = [{id: '456'}]
+      result = JsonCompare.get_diff(old, new, {})
+      result.should eq({
+        :update => {
+          0 => {:update => {id: '456'}}
+        }
+      })
+    end
+
+    it "should treat as remove and append" do
+      old = [{id: '123'}]
+      new = [{id: '456'}]
+      result = JsonCompare.get_diff(old, new, {matching_key: :id})
+      result.should eq({
+        :remove => {
+          0 => {id: '123'}
+        },
+        :append => {
+          0 => {id: '456'}
+        }
+      })
+    end
+
+    it "should treat as remove and append" do
+      old = [{id: '123'}]
+      new = [{id: '456'}, {id: '123', internal: true}, {id: '789'}]
+      result = JsonCompare.get_diff(old, new, {matching_key: :id})
+      result.should eq({
+        :update => {
+          0 => {
+            :append => {internal: true}
+          }
+        },
+        :append => {
+          0 => {id: '456'},
+          2 => {id: '789'}
+        }
+      })
+    end
+
+    it "should follow the array's order when comparing" do
+      old = [{id: '123'}, {id: '456'}]
+      new = [{id: '456'}, {id: '123'}]
+      result = JsonCompare.get_diff(old, new, {matching_key: :id})
+      result.should eq({
+        :append => {
+          0 => {id: '456'}
+        },
+        :remove => {
+          1 => {id: '456'}
+        }
+      })
+    end
+  end
+
+  describe 'Hash Array Comparison' do
+    it "should return empty hash" do
+      old_hash = {"ID" => "123"}
+      new_array = [{"ID" => "123"}]
+      result = JsonCompare.get_diff(old_hash, new_array)
+      result.should eq({})
+    end
+
+    it "should consider new array elements as append" do
+      old_hash = {"ID" => "123"}
+      new_array = [{"ID" => "123"}, {"ID" => "456"}]
+      result = JsonCompare.get_diff(old_hash, new_array)
+      result.should eq({
+        :append => {
+          1 => {"ID" => "456"}
+        }
+      })
     end
   end
 
