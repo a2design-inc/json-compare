@@ -12,6 +12,8 @@ module JsonCompare
       if old.kind_of? Hash
         if new.kind_of? Array
           diff_hash = compare_hash_array(old, new)
+        elsif new.kind_of? String
+          diff_hash = compare_hash_string(old, new)
         else
           diff_hash = compare_hashes(old, new)
         end
@@ -73,6 +75,17 @@ module JsonCompare
         end
       end
 
+      filter_results(result)
+    end
+
+     def compare_hash_string(old_hash, new_string)
+      result = get_diffs_struct
+      if (new_string.include? ",")
+        return compare_hash_array(old_hash,new_string.split(","))
+      else 
+        result[:update][0] = new_string
+        result[:remove][0] = old_hash
+      end
       filter_results(result)
     end
 
