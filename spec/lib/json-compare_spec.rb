@@ -163,4 +163,38 @@ describe 'Json compare' do
       result.should eq(expected)
     end
   end
+
+  describe "filter results" do
+    it "should not filter out non-integer keys that have a nil value" do
+      json1 = File.new('spec/fixtures/testfix0.1.9_1.json', 'r')
+      json2 = File.new('spec/fixtures/testfix0.1.9_2.json', 'r')
+      old, new = Yajl::Parser.parse(json1), Yajl::Parser.parse(json2)
+      result = JsonCompare.get_diff(old, new)
+      expected = {
+        :update=>{
+          "records"=>{
+            :update=>{
+              0=>{
+                :append=>{
+                  "expiry_date"=>"2016-07-22",
+                  "expires_soon"=>"yes",
+                  "license"=>nil
+                  },
+                  :remove=>{
+                    "license_key"=>nil,
+                    "csr"=>"CSRTEST"
+                    },
+                    :update=>{
+                      "reissuable"=>"no",
+                      "registration"=>"1970-01-01",
+                      "created_date"=>"2016-06-22 20:35:54"
+                    }
+                  }
+                }
+              }
+            }
+          }
+          result.should eq(expected)
+    end
+  end
 end

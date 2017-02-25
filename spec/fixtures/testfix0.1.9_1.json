@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "records": [
+    {
+      "status": "Renewed",
+      "reissuable": true,
+      "private_key": "PRIVATEKEYTEST",
+      "certificate": null,
+      "chain": null,
+      "order_number": 11111111,
+      "applicant": "Joe Shmo",
+      "registration": null,
+      "host": "HOSTTEST",
+      "created_date": "2016-06-22T20:35:54Z",
+      "license_key": null,
+      "password": null,
+      "applicant_email": "joe.shmo@company.com",
+      "id": "a0Aa00000044oinAAA",
+      "csr": "CSRTEST"
+    }
+  ]
+}
