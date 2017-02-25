@@ -108,7 +108,7 @@ module JsonCompare
         next if result[change_type].nil?
         temp_hash = {}
         result[change_type].each_key do |key|
-          next if result[change_type][key].nil?
+          next if result[change_type][key].nil? && key.is_a?(Integer)
           next if @excluded_keys.include? key
           temp_hash[key] = result[change_type][key]
         end
