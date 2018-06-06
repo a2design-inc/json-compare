@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Returns the difference between two JSON files}
   gem.summary       = %q{JSON Comparer}
   gem.homepage      = "https://github.com/a2design-company/json-compare"
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
