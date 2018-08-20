@@ -57,18 +57,30 @@ module JsonCompare
 
       result = get_diffs_struct
 
-      (0..inters).map do |n|
+      (1..inters).map do |n|
+        res = compare_elements(old_array[-n], new_array[-n])
+        if res.nil? || (res.respond_to?(:empty?) && res.empty?)
+          old_array_length -= 1
+          new_array_length -= 1
+        else
+          break
+        end
+      end
+
+      inters = [old_array_length, new_array_length].min
+
+      (0..(inters - 1)).map do |n|
         res = compare_elements(old_array[n], new_array[n])
         result[:update][n] = res unless (res.nil? || (res.respond_to?(:empty?) && res.empty?))
       end
 
       # the rest of the larger array
       if inters == old_array_length
-        (inters..new_array_length).each do |n|
+        (inters..(new_array_length - 1)).each do |n|
           result[:append][n] = new_array[n]
         end
       else
-        (inters..old_array_length).each do |n|
+        (inters..(old_array_length - 1)).each do |n|
           result[:remove][n] = old_array[n]
         end
       end
