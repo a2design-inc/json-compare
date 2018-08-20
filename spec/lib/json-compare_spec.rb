@@ -128,8 +128,18 @@ describe 'Json compare' do
     end
 
     it "should compare arrays of fixnums" do
-      result =  JsonCompare.get_diff([1, 2, 3], [1, 2, 3, 4])
-      result.should eq(:append => { 3 => 4 }, :update => { 3 => 4 })
+      result =  JsonCompare.get_diff([1, 2, 3], [1, 2, 3, 4, 5])
+      result.should eq(:append => { 3 => 4, 4 => 5 })
+    end
+
+    it "should compare arrays of remove last element" do
+      result =  JsonCompare.get_diff([1, 2, 3, 4, 5], [1, 2, 3])
+      result.should eq(:remove => { 3 => 4, 4 => 5 })
+    end
+
+    it "should compare arrays of remove hash" do
+      result =  JsonCompare.get_diff([{"a"=>1}, {"a"=>2}, {"a"=>3}, {"a"=>4}, {"a"=>5}], [{"a"=>1}, {"a"=>2}, {"a"=>3}, {"a"=>5}])
+      result.should eq(:remove => { 3 => {"a"=>4} })
     end
   end
 
